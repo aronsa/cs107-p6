@@ -4,6 +4,9 @@
 # Modify this file
 #
 
+class PostconditionException(Exception):
+    pass
+
 class NoSuchLink(Exception):
     pass
 
@@ -80,7 +83,11 @@ class DLList:
     # take O(1) time
     #   2 points
     def add(self, data):
-        return
+        #this will set the new data as the head and link the previoushead back to the new head.
+        previousHead = self.first
+        self.first = DoubleLink(data,None,previousHead)
+        if(previousHead != None): previousHead.setPrev(self.first)
+        if(self.first.getData() != data or self.first.getNext() != previousHead): raise PostconditionException
 
     # Remove some piece of data from the list. Compare for equality of
     # data using ==
