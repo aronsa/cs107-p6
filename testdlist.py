@@ -10,14 +10,21 @@ class TestDLList(unittest.TestCase):
         dl.add(2)
         self.assertEqual(dl.first.data, 2)
         self.assertEqual(dl.first.getNext().getData(),1)
-'''    def test_size(self):
+
+
+    def test_size(self):
         dl = DLList()
         dl.add(1)
         dl.add(2)
         dl.add(4)
         self.assertEqual(dl.size(), 3)
 
-    def test_eq(self):
+    def test_sizeB(self):
+        dl=DLList()
+        self.assertEqual(dl.size(),0)
+
+
+    '''def test_eq(self):
         dl = DLList()
         dl.add(1)
         dl.add(2)
@@ -66,5 +73,5 @@ class TestDLList(unittest.TestCase):
         dl.add(2)
         dl.add(1)
         self.assertEqual(dl.getIth(2), 4)
-'''
+        '''
 unittest.main()

@@ -51,7 +51,7 @@ class DoubleLink:
     def setPrev(self, n):
         self.prevLnk = n
 
-# A doubly-linked list
+#A doubly-linked list
 # 15 points
 class DLList:
     # Constructor for empty doubly-linked list
@@ -61,7 +61,14 @@ class DLList:
     # Calculate the size of the list
     #  1 points
     def size(self):
-        return
+        #edge case handled
+        link = self.first
+        i=0
+        while(link != None):
+            link = link.getNext()
+            i+=1
+        return i
+        
 
     # Check whether this doubly-linked list is equal to another
     # list. Two lists should be equal when they contain exactly the
