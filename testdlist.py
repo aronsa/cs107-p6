@@ -24,7 +24,7 @@ class TestDLList(unittest.TestCase):
         self.assertEqual(dl.size(),0)
 
 
-    '''def test_eq(self):
+    def test_eq(self):
         dl = DLList()
         dl.add(1)
         dl.add(2)

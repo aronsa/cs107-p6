@@ -83,8 +83,19 @@ class DLList:
     # 
     # Should be equal
     #   2 points
-    def __eq__(self, other): 
-        return
+    def __eq__(self, other: DLList): 
+        if(self.first==None and other.first==None): return True
+        a = self.first
+        b = other.first
+        while(a.hasNext() and b.hasNext()):
+            if(a!=b): return False
+            a = a.getNext()
+            b = b.getNext()
+        #we want to make sure the final two elements are
+        if(a.hasNext() or b.hasNext()): return False #there is a length mismatch.
+        if(a==b): return True #have to check the last element
+        else: return False #this should only occur when a!=b.
+            
 
     # Add some data at the head of a doubly-linked list This should
     # take O(1) time
