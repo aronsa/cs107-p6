@@ -51,6 +51,7 @@ class DoubleLink:
     def setPrev(self, n):
         self.prevLnk = n
 
+
 #A doubly-linked list
 # 15 points
 class DLList:
@@ -83,19 +84,20 @@ class DLList:
     # 
     # Should be equal
     #   2 points
-    def __eq__(self, other: DLList): 
-        if(self.first==None and other.first==None): return True
+    def __eq__(self, other):
+
+        if(self.size()!=other.size()):
+            return False
+        i = 0
         a = self.first
         b = other.first
-        while(a.hasNext() and b.hasNext()):
-            if(a!=b): return False
+        if(a == None): return True
+        while(i<self.size()):
+            if(self.first.getData() != other.first.getData()): return False
             a = a.getNext()
             b = b.getNext()
-        #we want to make sure the final two elements are
-        if(a.hasNext() or b.hasNext()): return False #there is a length mismatch.
-        if(a==b): return True #have to check the last element
-        else: return False #this should only occur when a!=b.
-            
+            i+=1
+        return True
 
     # Add some data at the head of a doubly-linked list This should
     # take O(1) time
@@ -111,12 +113,27 @@ class DLList:
     # data using ==
     #   2 points
     def remove(self,data):
-        return
-
+        d = self.first
+        isFound = False
+        while(not isFound):
+            if(d.getData() == data): isFound = True
+            if(not d.hasNext()): raise NoSuchElementException
+            d = d.getNext()
+        #once the element is found, it will be eliminated by referencing the next and previous elements instead.
+        if(d.hasNext()):
+            d.getNext().setPrev(d.getPrev())
+        if(d.hasPrev()):
+            d.getPrev().setNext(d.getNext())
     # Check whether the list contains `data`
     #   2 points
     def contains(self, data):
-        return
+        d = self.first
+        isFound= False
+        if(self.first==None):return self.first==data #to handle nones
+        while(not isFound):
+            if(d.getData()==data):return True
+            elif(not d.hasNext()): return False #we have iterated through th elist
+            else: d=d.getNext()
 
     # Reverse this linked-list in place. After a call to reverse, the
     # last element of the list should become the first, etc...
