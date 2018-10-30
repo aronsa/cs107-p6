@@ -160,6 +160,7 @@ class DLList:
         if(e.hasNext()):
             toArrayHelper(a,e.getNext())
 
+
     def toArray(self):
         arr = []
         d=self.first
