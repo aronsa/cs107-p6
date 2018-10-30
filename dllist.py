@@ -29,7 +29,8 @@ class DoubleLink:
         if (other):
             return self.__dict__ == other.__dict__
         return False
-
+    def __str__(self):
+        return str(self.data)
     def hasNext(self):
         return (self.nextLnk != None)
     
@@ -143,6 +144,8 @@ class DLList:
         if(d==None): return None #we're done and should escape at this point.
         while(d.hasNext()):
             print(d.getData())
+            print(d.getNext())
+            print(d.getPrev())
             oldNext = d.getNext()
             oldPrev = d.getPrev()
             d.setNext(oldPrev)
@@ -152,9 +155,17 @@ class DLList:
 
     # Convert the elements of this list to an array
     #  2 points
-    def toArray(self):
-        return
+    def toArrayHelper(a,e):
+        a.append(e.getData())
+        if(e.hasNext()):
+            toArrayHelper(a,e.getNext())
 
+    def toArray(self):
+        arr = []
+        d=self.first
+        if(self.first==None): return arr
+        toArrayHelper(arr,d)
+        return arr
     # Get the `i`th element of the list
     # Precondition: i < self.size()
     # Otherwise, raise NoSuchElementException
