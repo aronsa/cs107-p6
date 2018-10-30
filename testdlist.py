@@ -90,6 +90,7 @@ class TestDLList(unittest.TestCase):
         dl.add(2)
         dl.add(4)
         dl.reverse()
+        print(dl)
         self.assertEqual(dl.first.data, 1)
         self.assertEqual(dl.first.getNext().getNext().data, 4)
 

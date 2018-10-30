@@ -141,13 +141,14 @@ class DLList:
     def reverse(self):
         d= self.first
         if(d==None): return None #we're done and should escape at this point.
-        while(d.hasNext())
+        while(d.hasNext()):
+            print(d.getData())
             oldNext = d.getNext()
             oldPrev = d.getPrev()
-            d.setnext(oldPrev)
+            d.setNext(oldPrev)
             d.setPrev(oldNext)
             d=d.getPrev() #this is the "next" element in the list, as the order for this element has now been reversed.
-
+        self.first = d #this will be the last element which is now the first
 
     # Convert the elements of this list to an array
     #  2 points
