@@ -85,7 +85,6 @@ class DLList:
     # 
     # Should be equal
     #   2 points
-<<<<<<< HEAD
     def __eq__(self, other): 
         if(self.first==None and other.first==None): return True
         a = self.first
@@ -154,7 +153,7 @@ class DLList:
         data= self.first
         if(d==None): return None #we're done and should escape at this point.
         reverseHelper(data)
-       self.first = d #this will be the last element which is now the first
+        self.first = d #this will be the last element which is now the first
 
     # Convert the elements of this list to an array
     #  2 points
