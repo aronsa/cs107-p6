@@ -90,13 +90,8 @@ class TestDLList(unittest.TestCase):
         dl.add(2)
         dl.add(4)
         dl.reverse()
-        dlb = DLList()
-        dlb.add(4)
-        dlb.add(2)
-        dlb.add(1)
-        self.assertEqual(dl.first.data, 1)
-        self.assertEqual(dl,dlb)
-        #self.assertEqual(dl.first.getNext().getNext().data, 4)
+        self.assertEqual(dl.first.data,1)
+        self.assertEqual(dl.first.getNext().getNext().data,4)
 
     def test_toArray(self):
         dl = DLList()

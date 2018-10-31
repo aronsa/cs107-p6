@@ -118,9 +118,9 @@ class DLList:
         while(not isFound):
             if(d.getData() == data): isFound = True
             elif(not d.hasNext()): raise NoSuchElementException
-            d = d.getNext()
+            else: d = d.getNext()
         #once the element is found, it will be eliminated by referencing the next and previous elements instead.
-
+        print("found element: "+str(d))
         if(d.hasNext()):
             d.getNext().setPrev(d.getPrev())
         if(d.hasPrev()):
@@ -143,6 +143,14 @@ class DLList:
     #   2 points
     def reverse(self):
         reverse = DLList()
+        i = 0
+        while(i<self.size()):
+            reverse.add(self.getIth(i))
+            i+=1
+        print(self.toArray())
+        print(reverse.toArray())
+        self=reverse
+        print(self.toArray())
 
     # Convert the elements of this list to an array
     #  2 points
