@@ -83,17 +83,18 @@ class DLList:
     # 
     # Should be equal
     #   2 points
-    def __eq__(self, other: DLList): 
+    def __eq__(self, other): 
         if(self.first==None and other.first==None): return True
         a = self.first
         b = other.first
         while(a.hasNext() and b.hasNext()):
-            if(a!=b): return False
+            if(a.getData()!=b.getData()): return False
             a = a.getNext()
             b = b.getNext()
+
         #we want to make sure the final two elements are
         if(a.hasNext() or b.hasNext()): return False #there is a length mismatch.
-        if(a==b): return True #have to check the last element
+        elif(a.getData()==b.getData()): return True #have to check the last element
         else: return False #this should only occur when a!=b.
             
 
