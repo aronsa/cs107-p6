@@ -71,7 +71,6 @@ class DLList:
             i+=1
         return i
         
-
     # Check whether this doubly-linked list is equal to another
     # list. Two lists should be equal when they contain exactly the
     # same sequence of elements, where the comparison of each object
@@ -95,7 +94,7 @@ class DLList:
             b = b.getNext()
 
         #we want to make sure the final two elements are
-        if(a.hasNext() or b.hasNext()): return False #there is a length mismatch.
+        if(a==None or b==None): return False #there is a length mismatch.
         elif(a.getData()==b.getData()): return True #have to check the last element
         else: return False #this should only occur when a!=b.
             
@@ -118,13 +117,16 @@ class DLList:
         isFound = False
         while(not isFound):
             if(d.getData() == data): isFound = True
-            if(not d.hasNext()): raise NoSuchElementException
+            elif(not d.hasNext()): raise NoSuchElementException
             d = d.getNext()
         #once the element is found, it will be eliminated by referencing the next and previous elements instead.
+
         if(d.hasNext()):
             d.getNext().setPrev(d.getPrev())
         if(d.hasPrev()):
             d.getPrev().setNext(d.getNext())
+        else:
+            self.first = d.getNext()
     # Check whether the list contains `data`
     #   2 points
     def contains(self, data):
@@ -140,20 +142,7 @@ class DLList:
     # last element of the list should become the first, etc...
     #   2 points
     def reverse(self):
-        def reverseHelper(d):
-            print(d.getData())
-            print(d.getNext())
-            print(d.getPrev())
-            oldNext = d.getNext()
-            oldPrev = d.getPrev()
-            d.setNext(oldPrev)
-            d.setPrev(oldNext)
-            d=d.getPrev() #this is the "next" element in the list, as the order for this element has now been reversed.
-            if(d.hasPrev()): reverseHelper(d.getPrev())
-        data= self.first
-        if(d==None): return None #we're done and should escape at this point.
-        reverseHelper(data)
-        self.first = d #this will be the last element which is now the first
+        reverse = DLList()
 
     # Convert the elements of this list to an array
     #  2 points
@@ -174,4 +163,10 @@ class DLList:
     # Otherwise, raise NoSuchElementException
     #  2 points
     def getIth(self, i):
-        return
+        if(i>=self.size()): raise NoSuchElementException
+        d = self.first
+        c = 0
+        while(c<i):
+            d = d.getNext()
+            c+=1
+        return d.getData()
