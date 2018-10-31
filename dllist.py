@@ -29,7 +29,8 @@ class DoubleLink:
         if (other):
             return self.__dict__ == other.__dict__
         return False
-
+    def __str__(self):
+        return str(self.data)
     def hasNext(self):
         return (self.nextLnk != None)
     
@@ -50,6 +51,7 @@ class DoubleLink:
 
     def setPrev(self, n):
         self.prevLnk = n
+
 
 #A doubly-linked list
 # 15 points
@@ -83,6 +85,7 @@ class DLList:
     # 
     # Should be equal
     #   2 points
+<<<<<<< HEAD
     def __eq__(self, other): 
         if(self.first==None and other.first==None): return True
         a = self.first
@@ -112,24 +115,61 @@ class DLList:
     # data using ==
     #   2 points
     def remove(self,data):
-        return
-
+        d = self.first
+        isFound = False
+        while(not isFound):
+            if(d.getData() == data): isFound = True
+            if(not d.hasNext()): raise NoSuchElementException
+            d = d.getNext()
+        #once the element is found, it will be eliminated by referencing the next and previous elements instead.
+        if(d.hasNext()):
+            d.getNext().setPrev(d.getPrev())
+        if(d.hasPrev()):
+            d.getPrev().setNext(d.getNext())
     # Check whether the list contains `data`
     #   2 points
     def contains(self, data):
-        return
+        d = self.first
+        isFound= False
+        if(self.first==None):return self.first==data #to handle nones
+        while(not isFound):
+            if(d.getData()==data):return True
+            elif(not d.hasNext()): return False #we have iterated through th elist
+            else: d=d.getNext()
 
     # Reverse this linked-list in place. After a call to reverse, the
     # last element of the list should become the first, etc...
     #   2 points
     def reverse(self):
-        return
+        def reverseHelper(d):
+            print(d.getData())
+            print(d.getNext())
+            print(d.getPrev())
+            oldNext = d.getNext()
+            oldPrev = d.getPrev()
+            d.setNext(oldPrev)
+            d.setPrev(oldNext)
+            d=d.getPrev() #this is the "next" element in the list, as the order for this element has now been reversed.
+            if(d.hasPrev()): reverseHelper(d.getPrev())
+        data= self.first
+        if(d==None): return None #we're done and should escape at this point.
+        reverseHelper(data)
+       self.first = d #this will be the last element which is now the first
 
     # Convert the elements of this list to an array
     #  2 points
+    
     def toArray(self):
-        return
+        def toArrayHelper(a,e):
+            a.append(e.getData())
+            if(e.hasNext()):
+                toArrayHelper(a,e.getNext())
 
+        arr = []
+        d=self.first
+        if(self.first==None): return arr
+        toArrayHelper(arr,d)
+        return arr
     # Get the `i`th element of the list
     # Precondition: i < self.size()
     # Otherwise, raise NoSuchElementException

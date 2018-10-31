@@ -35,14 +35,47 @@ class TestDLList(unittest.TestCase):
         dlb.add(4)
         self.assertEqual(dl, dlb)
 
+    def test_eqFalse(self):
+        dl = DLList()
+        dl.add(1)
+        dl.add(2)
+        dl.add(4)
+        dlb = DLList()
+        dlb.add(1)
+        dlb.add(2)
+        dlb.add(3)
+        self.assertFalse(dl== dlb)
+
+        
+    def test_eqEmpty(self):
+        dl = DLList()
+        dlb= DLList()
+        self.assertEqual(dl,dlb)
+
+    def test_eqMismatch(self):
+        dl = DLList()
+        dl.add(1)
+        dlb=DLList()
+        self.assertFalse(dl==dlb)
+
+    def test_oneElement(self):
+        dl = DLList()
+        dl.add(1)
+        dlb = DLList()
+        dlb.add(1)
+        self.assertEqual(dl,dlb)
+
     def test_remove(self):
         dl = DLList()
         dl.add(1)
         dl.add(2)
         dl.add(4)
-        dl.remove(4)
+        dl.remove(2)
+        dlb = DLList()
+        dlb.add(1)
+        dlb.add(4)
         self.assertEqual(dl.size(), 2)
-
+        self.assertEqual(dl,dlb)
     def test_contains(self):
         dl = DLList()
         dl.add(1)
@@ -57,8 +90,13 @@ class TestDLList(unittest.TestCase):
         dl.add(2)
         dl.add(4)
         dl.reverse()
+        dlb = DLList()
+        dlb.add(4)
+        dlb.add(2)
+        dlb.add(1)
         self.assertEqual(dl.first.data, 1)
-        self.assertEqual(dl.first.getNext().getNext().data, 4)
+        self.assertEqual(dl,dlb)
+        #self.assertEqual(dl.first.getNext().getNext().data, 4)
 
     def test_toArray(self):
         dl = DLList()
