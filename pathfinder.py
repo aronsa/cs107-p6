@@ -21,6 +21,11 @@ class Waypoint:
     def toTuple(self):
         return (self.x,self.y)
 
+def forallHelper(lst,f,i):
+    
+def forall(lst,f):
+    return forallHelper(lst,f,0)
+
 # A path finder object isolates the logic to perform a path-finding
 # problem on:
 # 
@@ -100,22 +105,23 @@ class PathFinder:
                 
                 if(self.shouldMoveTo(o.x+1,o.y)):
                     #we have now added this point to the frontier and it should be makred as such
+                    print(o.x+1,o.y)
                     self.visited[o.x+1][o.y]=True
                     newFrontier.append(Waypoint(o.x+1,o.y,o.distance+1,o))
                 #repeated for each of the four possible additional accessable points
                 if(self.shouldMoveTo(o.x-1,o.y)):
                     self.visited[o.x-1][o.y]=True
                     newFrontier.append(Waypoint(o.x-1,o.y,o.distance+1,o))
-
+                    print(o.x-1,o.y)
                 if(self.shouldMoveTo(o.x,o.y+1)):
                     self.visited[o.x][o.y+1]=True
                     newFrontier.append(Waypoint(o.x,o.y+1,o.distance+1,o))
-
+                    print(o.x,o.y+1)
                 if(self.shouldMoveTo(o.x,o.y-1)):
                     self.visited[o.x][o.y-1]=True
                     newFrontier.append(Waypoint(o.x,o.y-1,o.distance+1,o))
-
-                print("the additional points added by frontier point ",o,"are")
+                    print(o.x,o.y-1)
+                print("the frontier is now",newFrontier)
                 for e in newFrontier:
                     print(e)
             print ("new frontier found.")
