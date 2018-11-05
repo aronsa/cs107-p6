@@ -1,3 +1,4 @@
+from copy import deepcopy
 # Doubly-linked list implementation
 
 # 
@@ -142,20 +143,18 @@ class DLList:
     # Reverse this linked-list in place. After a call to reverse, the
     # last element of the list should become the first, etc...
     #   2 points
-    def reverse(self):
-        self=r(self)
 
-    def r(self):
-        reverse = DLList()
+    def reverse(self):
+        reverseList = DLList()
         i = 0
         while(i<self.size()):
-            reverse.add(self.getIth(i))
+            reverseList.add(self.getIth(i))
             i+=1
         print(self.toArray())
-        print(reverse.toArray())
-        self= reverse
+        print(reverseList.toArray())
+        self.first=reverseList.first
         print(self.toArray())
-        if(self.toArray()!=reverse.toArray()): raise Postcondition
+        if(self.toArray()!=reverseList.toArray()): raise Postcondition
         return self
     
    # Convert the elements of this list to an array
