@@ -142,19 +142,18 @@ class DLList:
     def reverse(self):
         def reverseHelper(d):
             print(d.getData())
-            print(d.getNext())
-            print(d.getPrev())
             oldNext = d.getNext()
             oldPrev = d.getPrev()
             d.setNext(oldPrev)
             d.setPrev(oldNext)
-            d=d.getPrev() #this is the "next" element in the list, as the order for this element has now been reversed.
             if(d.hasPrev()): reverseHelper(d.getPrev())
+            return d 
+        
         data= self.first
-        if(d==None): return None #we're done and should escape at this point.
-        reverseHelper(data)
-       self.first = d #this will be the last element which is now the first
-
+        if(data==None): return None #we're done and should escape at this point.
+        self.first = reverseHelper(data)
+        
+        print(self.toArray())
     # Convert the elements of this list to an array
     #  2 points
     
