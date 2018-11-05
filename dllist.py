@@ -3,8 +3,9 @@
 # 
 # Modify this file
 #
-
-class PostconditionException(Exception):
+class Precondition(Exception):
+    pass
+class Postcondition(Exception):
     pass
 
 class NoSuchLink(Exception):
@@ -71,7 +72,6 @@ class DLList:
             i+=1
         return i
         
-
     # Check whether this doubly-linked list is equal to another
     # list. Two lists should be equal when they contain exactly the
     # same sequence of elements, where the comparison of each object
@@ -85,20 +85,20 @@ class DLList:
     # 
     # Should be equal
     #   2 points
-    def __eq__(self, other):
-
-        if(self.size()!=other.size()):
-            return False
-        i = 0
+    def __eq__(self, other): 
+        if(self.first==None and other.first==None): return True
         a = self.first
         b = other.first
-        if(a == None): return True
-        while(i<self.size()):
-            if(self.first.getData() != other.first.getData()): return False
+        while(a.hasNext() and b.hasNext()):
+            if(a.getData()!=b.getData()): return False
             a = a.getNext()
             b = b.getNext()
-            i+=1
-        return True
+
+        #we want to make sure the final two elements are
+        if(a==None or b==None): return False #there is a length mismatch.
+        elif(a.getData()==b.getData()): return True #have to check the last element
+        else: return False #this should only occur when a!=b.
+            
 
     # Add some data at the head of a doubly-linked list This should
     # take O(1) time
@@ -108,7 +108,7 @@ class DLList:
         previousHead = self.first
         self.first = DoubleLink(data,None,previousHead)
         if(previousHead != None): previousHead.setPrev(self.first)
-        if(self.first.getData() != data or self.first.getNext() != previousHead): raise PostconditionException
+        if(self.first.getData() != data or self.first.getNext() != previousHead): raise Postcondition
 
     # Remove some piece of data from the list. Compare for equality of
     # data using ==
@@ -118,13 +118,16 @@ class DLList:
         isFound = False
         while(not isFound):
             if(d.getData() == data): isFound = True
-            if(not d.hasNext()): raise NoSuchElementException
-            d = d.getNext()
+            elif(not d.hasNext()): raise NoSuchElementException
+            else: d = d.getNext()
         #once the element is found, it will be eliminated by referencing the next and previous elements instead.
+        print("found element: "+str(d))
         if(d.hasNext()):
             d.getNext().setPrev(d.getPrev())
         if(d.hasPrev()):
             d.getPrev().setNext(d.getNext())
+        else:
+            self.first = d.getNext()
     # Check whether the list contains `data`
     #   2 points
     def contains(self, data):
@@ -140,21 +143,22 @@ class DLList:
     # last element of the list should become the first, etc...
     #   2 points
     def reverse(self):
-        def reverseHelper(d):
-            print(d.getData())
-            oldNext = d.getNext()
-            oldPrev = d.getPrev()
-            d.setNext(oldPrev)
-            d.setPrev(oldNext)
-            if(d.hasPrev()): reverseHelper(d.getPrev())
-            return d 
-        
-        data= self.first
-        if(data==None): return None #we're done and should escape at this point.
-        self.first = reverseHelper(data)
-        
+        self=r(self)
+
+    def r(self):
+        reverse = DLList()
+        i = 0
+        while(i<self.size()):
+            reverse.add(self.getIth(i))
+            i+=1
         print(self.toArray())
-    # Convert the elements of this list to an array
+        print(reverse.toArray())
+        self= reverse
+        print(self.toArray())
+        if(self.toArray()!=reverse.toArray()): raise Postcondition
+        return self
+    
+   # Convert the elements of this list to an array
     #  2 points
     
     def toArray(self):
@@ -173,4 +177,10 @@ class DLList:
     # Otherwise, raise NoSuchElementException
     #  2 points
     def getIth(self, i):
-        return
+        if(i>=self.size()): raise NoSuchElementException
+        d = self.first
+        c = 0
+        while(c<i):
+            d = d.getNext()
+            c+=1
+        return d.getData()
