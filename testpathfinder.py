@@ -51,6 +51,8 @@ class TestPathFinder(unittest.TestCase):
         self.assertEqual(self.pathfinder.canMoveTo(4,20), False)
         self.assertEqual(self.pathfinder.canMoveTo(4,20), False)
 
+        self.assertFalse(self.pathfinder.canMoveTo(-1,1))
+    
     # Tests for `checkValidPath`
     def test_checkValidPath(self):
         self.setup(1,1,5,5,20,20,level1)
