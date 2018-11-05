@@ -3,8 +3,9 @@
 # 
 # Modify this file
 #
-
-class PostconditionException(Exception):
+class Precondition(Exception):
+    pass
+class Postcondition(Exception):
     pass
 
 class NoSuchLink(Exception):
@@ -107,7 +108,7 @@ class DLList:
         previousHead = self.first
         self.first = DoubleLink(data,None,previousHead)
         if(previousHead != None): previousHead.setPrev(self.first)
-        if(self.first.getData() != data or self.first.getNext() != previousHead): raise PostconditionException
+        if(self.first.getData() != data or self.first.getNext() != previousHead): raise Postcondition
 
     # Remove some piece of data from the list. Compare for equality of
     # data using ==
@@ -142,6 +143,9 @@ class DLList:
     # last element of the list should become the first, etc...
     #   2 points
     def reverse(self):
+        self=r(self)
+
+    def r(self):
         reverse = DLList()
         i = 0
         while(i<self.size()):
@@ -149,10 +153,12 @@ class DLList:
             i+=1
         print(self.toArray())
         print(reverse.toArray())
-        self=reverse
+        self= reverse
         print(self.toArray())
-
-    # Convert the elements of this list to an array
+        if(self.toArray()!=reverse.toArray()): raise Postcondition
+        return self
+    
+   # Convert the elements of this list to an array
     #  2 points
     
     def toArray(self):
