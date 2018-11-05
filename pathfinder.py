@@ -1,5 +1,20 @@
 from dllist import *
 
+class Precondition(Exception):
+    def typeCheck(v,t):
+        if(type(v)!=t): raise Precondition
+
+
+class Waypoint:
+    def __init__(self,loc,prev):
+        Precondition.typeCheck(loc,tuple)
+        if(prev!=None):
+            Precondition.typeCheck(prev,Waypoint)
+        self.location = loc
+        self.previous = prev
+
+
+        
 # A path finder object isolates the logic to perform a path-finding
 # problem on:
 # 
