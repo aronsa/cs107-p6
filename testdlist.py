@@ -1,4 +1,4 @@
-# Public tests for project 6
+ssssssss tests for project 6
 import unittest
 from dllist import *
 
@@ -96,7 +96,6 @@ class TestDLList(unittest.TestCase):
         print(dl.first.getData())
         print(dl.first.getNext().getData())
         print(dl.first.getNext().getNext().getData())
-        #NOTE THIS IS NOT THE ORIGINAL TEST. YOU HAVE SOME DATA MUTABILITY THING.
         self.assertEqual(dl.first.data,1)
         self.assertEqual(dl.first.getNext().getNext().data,4)
 
