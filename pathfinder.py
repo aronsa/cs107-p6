@@ -21,10 +21,6 @@ class Waypoint:
     def toTuple(self):
         return (self.x,self.y)
 
-def forallHelper(lst,f,i):
-    
-def forall(lst,f):
-    return forallHelper(lst,f,0)
 
 # A path finder object isolates the logic to perform a path-finding
 # problem on:
@@ -82,16 +78,31 @@ class PathFinder:
         return self.canMoveTo(tx,ty) and not self.visited[tx][ty]
 
     def canSolve(self, toCoordinate):
+        print("starting at ",self.startX,self.startY)
         print("looking for ",toCoordinate)
         self.visited[self.startX][self.startY]=True
-        return self.findNextFrontier([Waypoint(self.startX,self.startY,0,None)],toCoordinate)
-
+        result= self.findNextFrontier([Waypoint(self.startX,self.startY,0,None)],toCoordinate)
+        print("result",result)
+        if(result==False): return False
+        elif(type(result)==Waypoint): return True
+    
     def findPath(self, toCoordinate):
-        return False
-
+        print("starting at ",self.startX,self.startY)
+        print("looking for ",toCoordinate)
+        self.visited[self.startX][self.startY]=True
+        result= self.findNextFrontier([Waypoint(self.startX,self.startY,0,None)],toCoordinate)
+        print("result",result)
+        if(result==False): return result
+        if(result==None): return False
+        else:
+            path=[]
+            while(result.prev!=None):
+                path.insert(0,(result.x-result.prev.x,result.y-result.prev.y))
+                result = result.prev
+            path.insert(0,(result.x,result.y))
+            return path
     def findNextFrontier(self,frontier,toCoordinate):
         newFrontier = []
-        print(frontier)
         if(frontier==[]):
             print ("frontier exhausted")
             return False #we have exhausted the frontier and have no more places to go.
@@ -101,7 +112,7 @@ class PathFinder:
                 print(o)
                 if(o.x==toCoordinate[0] and o.y==toCoordinate[1]):
                     print("destination found at ",o.x,",",o.y)
-                    return True
+                    return o
                 
                 if(self.shouldMoveTo(o.x+1,o.y)):
                     #we have now added this point to the frontier and it should be makred as such
@@ -121,10 +132,20 @@ class PathFinder:
                     self.visited[o.x][o.y-1]=True
                     newFrontier.append(Waypoint(o.x,o.y-1,o.distance+1,o))
                     print(o.x,o.y-1)
-                print("the frontier is now",newFrontier)
                 for e in newFrontier:
                     print(e)
             print ("new frontier found.")
-            print(newFrontier)
-            self.findNextFrontier(newFrontier,toCoordinate)
+#        #printing out a minimap
+            i=0
+            while(i<len(self.visited)):
+                j=0
+                s=""
+                while(j<len(self.visited[i])):
+                    if(self.visited[j][i]):s=s+"X"
+                    else: s=s+"-"
+                    j+=1
+                
+                print(s)
+                i+=1
+        return self.findNextFrontier(newFrontier,toCoordinate)
         
