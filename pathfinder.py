@@ -22,7 +22,9 @@ class Waypoint:
         return (self.x,self.y)
 
 def forallHelper(lst,f,i):
-    
+    if(i<len(lst)): f(lst[i])
+    forallhelper(lst,f,i+1)
+
 def forall(lst,f):
     return forallHelper(lst,f,0)
 
@@ -79,9 +81,15 @@ class PathFinder:
    
    #the algorithm should never return to a tile that has already been visited. this will prevent that from happening.
     def shouldMoveTo(self,tx,ty):
-        return self.canMoveTo(tx,ty) and not self.visited[tx][ty]
+        shouldMove=(self.canMoveTo(tx,ty) and (not self.visited[tx][ty]))
+        if(shouldMove): print("should move to",tx,ty)
+        elif(not self.canMoveTo(tx,ty)): print("cannot move to",tx,ty)
+        elif(self.visited[tx][ty]): print ("already visited",tx,ty)
+        else: print ("WHAT THE ACTUAL FUCK")
+        return shouldMove
 
     def canSolve(self, toCoordinate):
+        print("===================================")
         print("looking for ",toCoordinate)
         self.visited[self.startX][self.startY]=True
         return self.findNextFrontier([Waypoint(self.startX,self.startY,0,None)],toCoordinate)
@@ -91,7 +99,6 @@ class PathFinder:
 
     def findNextFrontier(self,frontier,toCoordinate):
         newFrontier = []
-        print(frontier)
         if(frontier==[]):
             print ("frontier exhausted")
             return False #we have exhausted the frontier and have no more places to go.
@@ -108,23 +115,36 @@ class PathFinder:
                     print(o.x+1,o.y)
                     self.visited[o.x+1][o.y]=True
                     newFrontier.append(Waypoint(o.x+1,o.y,o.distance+1,o))
-                #repeated for each of the four possible additional accessable points
+               #repeated for each of the four possible additional accessable points
+              
                 if(self.shouldMoveTo(o.x-1,o.y)):
                     self.visited[o.x-1][o.y]=True
                     newFrontier.append(Waypoint(o.x-1,o.y,o.distance+1,o))
                     print(o.x-1,o.y)
+
+                
                 if(self.shouldMoveTo(o.x,o.y+1)):
                     self.visited[o.x][o.y+1]=True
                     newFrontier.append(Waypoint(o.x,o.y+1,o.distance+1,o))
                     print(o.x,o.y+1)
+
+
                 if(self.shouldMoveTo(o.x,o.y-1)):
                     self.visited[o.x][o.y-1]=True
                     newFrontier.append(Waypoint(o.x,o.y-1,o.distance+1,o))
                     print(o.x,o.y-1)
-                print("the frontier is now",newFrontier)
+               
+               
+                print("the frontier is now")
                 for e in newFrontier:
                     print(e)
             print ("new frontier found.")
-            print(newFrontier)
+            for l in self.visited:
+                s = ""
+                for e in l:
+                    if(e): s=s+"X"
+                    else: s=s+"-"
+                print(s)
+
             self.findNextFrontier(newFrontier,toCoordinate)
         
