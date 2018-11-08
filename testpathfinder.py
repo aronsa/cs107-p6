@@ -69,8 +69,10 @@ class TestPathFinder(unittest.TestCase):
         path1 = [(1, 13), (1, 0), (1, 0), (1, 0), (1, 0)
                  ,(0, -1), (0, -1), (0, -1), (0, -1)
                  , (0, -1), (0, -1), (0, -1), (0, -1)]
-        path2 = [(1, 13), (-1, 0), (-1, 0)]
         self.assertEqual(self.pathfinder.checkValidPath(path1), True)
+    def test_checkValidPath_B(self):
+        self.setup(1,1,5,5,20,20,level1)
+        path2 = [(1, 13), (-1, 0), (-1, 0)]
         self.assertEqual(self.pathfinder.checkValidPath(path2), False)
 
     def test_canSolve(self):

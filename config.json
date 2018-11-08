@@ -63,7 +63,7 @@
   "levels": [
     {
       "id": "level1",
-      "file": "maps/level3.map",
+      "file": "maps/level1.map",
       "width": 20,
       "height": 20,
       "startX": 1,

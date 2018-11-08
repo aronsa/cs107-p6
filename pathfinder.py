@@ -55,7 +55,21 @@ class PathFinder:
 
     # Check whether `path` is a valid path
     def checkValidPath(self,path):
-        return False
+        loc = [0,0]
+       # print(path)
+        while (len(path)>0):
+            step = path[0]
+            loc[0]+=step[0]
+            loc[1]+=step[1]
+           # print(loc)
+            if(not self.canMoveTo(loc[0],loc[1])): 
+                print("cannot move")
+                return False #some invalid move has been made
+            path = path[1:]
+            if(len(path)>0 and abs(path[0][0]+path[0][1])!=1): 
+                print("invalid step")
+                return False #invalid movement tuple
+        return True
 
     # Check whether or not there is a wall (or other solid object) at
     # the coordinates (x,y)
@@ -78,20 +92,20 @@ class PathFinder:
         return self.canMoveTo(tx,ty) and not self.visited[tx][ty]
 
     def canSolve(self, toCoordinate):
-        print("starting at ",self.startX,self.startY)
-        print("looking for ",toCoordinate)
+#        print("starting at ",self.startX,self.startY)
+#        print("looking for ",toCoordinate)
         self.visited[self.startX][self.startY]=True
         result= self.findNextFrontier([Waypoint(self.startX,self.startY,0,None)],toCoordinate)
-        print("result",result)
+#        print("result",result)
         if(result==False): return False
         elif(type(result)==Waypoint): return True
     
     def findPath(self, toCoordinate):
-        print("starting at ",self.startX,self.startY)
-        print("looking for ",toCoordinate)
+#        print("starting at ",self.startX,self.startY)
+#        print("looking for ",toCoordinate)
         self.visited[self.startX][self.startY]=True
         result= self.findNextFrontier([Waypoint(self.startX,self.startY,0,None)],toCoordinate)
-        print("result",result)
+#        print("result",result)
         if(result==False): return result
         if(result==None): return False
         else:
@@ -109,43 +123,43 @@ class PathFinder:
         else: #in this case we are going to iterate through all of the frontier points to find new ones. 
             for o in frontier:
                 #We've found the path if this is true
-                print(o)
+#                print(o)
                 if(o.x==toCoordinate[0] and o.y==toCoordinate[1]):
                     print("destination found at ",o.x,",",o.y)
                     return o
                 
                 if(self.shouldMoveTo(o.x+1,o.y)):
                     #we have now added this point to the frontier and it should be makred as such
-                    print(o.x+1,o.y)
+#                    print(o.x+1,o.y)
                     self.visited[o.x+1][o.y]=True
                     newFrontier.append(Waypoint(o.x+1,o.y,o.distance+1,o))
                 #repeated for each of the four possible additional accessable points
                 if(self.shouldMoveTo(o.x-1,o.y)):
                     self.visited[o.x-1][o.y]=True
                     newFrontier.append(Waypoint(o.x-1,o.y,o.distance+1,o))
-                    print(o.x-1,o.y)
+#                    print(o.x-1,o.y)
                 if(self.shouldMoveTo(o.x,o.y+1)):
                     self.visited[o.x][o.y+1]=True
                     newFrontier.append(Waypoint(o.x,o.y+1,o.distance+1,o))
-                    print(o.x,o.y+1)
+#                    print(o.x,o.y+1)
                 if(self.shouldMoveTo(o.x,o.y-1)):
                     self.visited[o.x][o.y-1]=True
                     newFrontier.append(Waypoint(o.x,o.y-1,o.distance+1,o))
-                    print(o.x,o.y-1)
-                for e in newFrontier:
-                    print(e)
-            print ("new frontier found.")
+#                    print(o.x,o.y-1)
+#                for e in newFrontier:
+#                    print(e)
+#            print ("new frontier found.")
 #        #printing out a minimap
-            i=0
-            while(i<len(self.visited)):
-                j=0
-                s=""
-                while(j<len(self.visited[i])):
-                    if(self.visited[j][i]):s=s+"X"
-                    else: s=s+"-"
-                    j+=1
-                
-                print(s)
-                i+=1
+#            i=0
+#            while(i<len(self.visited)):
+#                j=0
+#                s=""
+#                while(j<len(self.visited[i])):
+#                    if(self.visited[j][i]):s=s+"X"
+#                    else: s=s+"-"
+#                    j+=1
+#                
+#                print(s)
+#                i+=1
         return self.findNextFrontier(newFrontier,toCoordinate)
         
